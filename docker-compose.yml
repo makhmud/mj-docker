@@ -7,7 +7,10 @@ services:
     applications:
         image: tianon/true
         volumes:
-            - ../code/:/var/www/mj
+            - /var/www/swp/:/var/www/swp
+            - /var/www/volt/neos/:/var/www/volt/neos
+            - /var/www/volt/store/:/var/www/volt/store
+            - /var/www/adminer/:/var/www/adminer
 #            - ../sample/:/var/www/sample
 
 ### Workspace Utilities Container ###########################
@@ -50,18 +53,18 @@ services:
         build:
             context: ./php-fpm
             args:
-                - INSTALL_XDEBUG=true
+                - INSTALL_XDEBUG=false
                 - INSTALL_SOAP=false
                 - INSTALL_MONGO=false
                 - INSTALL_ZIP_ARCHIVE=true
                 - INSTALL_BCMATH=false
-                - INSTALL_PHPREDIS=true
-                - INSTALL_MEMCACHED=true
+                #- INSTALL_PHPREDIS=false
+                - INSTALL_MEMCACHED=false
                 - INSTALL_OPCACHE=false
-                - INSTALL_EXIF=false
+                #- INSTALL_EXIF=false
                 - INSTALL_AEROSPIKE_EXTENSION=false
                 - CODEIGNITER=false
-            dockerfile: Dockerfile-71
+            dockerfile: Dockerfile-56
         volumes_from:
             - applications
         expose:
@@ -114,11 +117,11 @@ services:
                 - MYSQL_DATABASE=homestead
                 - MYSQL_USER=homestead
                 - MYSQL_PASSWORD=secret
-                - MYSQL_ROOT_PASSWORD=root
+                - MYSQL_ROOT_PASSWORD=123123
         volumes:
             - mysql:/var/lib/mysql
         ports:
-            - "3306:3306"
+            - "9999:3306"
 
 ### MongoDB Container #######################################
 
@@ -131,12 +134,12 @@ services:
 
 ### Redis Container #########################################
 
-    redis:
-        build: ./redis
-        volumes:
-            - redis:/data
-        ports:
-            - "6379:6379"
+#    redis:
+#        build: ./redis
+#        volumes:
+#            - redis:/data
+#        ports:
+#            - "6379:6379"
 
 ### Memcached Container #####################################
 
@@ -151,18 +154,18 @@ services:
 
 ### RabbitMQ Container ######################################
 
-    rabbitmq:
-        build: ./rabbitmq
-        ports:
-            - "5672:5672"
-            - "15671:15671"
-            - "8080:15672"
-        privileged: true
-        environment:
-            RABBITMQ_DEFAULT_USER: guest
-            RABBITMQ_DEFAULT_PASS: guest
-        links:
-            - php-fpm
+#    rabbitmq:
+#        build: ./rabbitmq
+#        ports:
+#            - "5672:5672"
+#            - "15671:15671"
+#            - "8080:15672"
+#        privileged: true
+#        environment:
+#            RABBITMQ_DEFAULT_USER: guest
+#            RABBITMQ_DEFAULT_PASS: guest
+#        links:
+#            - php-fpm
 
 ### Caddy Server Container ##################################
 
@@ -189,7 +192,7 @@ services:
             PMA_ARBITRARY: 1
             MYSQL_USER: homestead
             MYSQL_PASSWORD: secret
-            MYSQL_ROOT_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: 123123
         ports:
             - "8888:80"
         links:
@@ -200,16 +203,16 @@ services:
 
 ### ElasticSearch Container #################################
 
-    elasticsearch:
-        build: ./elasticsearch
-        volumes:
-            - elasticsearch-data:/usr/share/elasticsearch/data
-            - elasticsearch-plugins:/usr/share/elasticsearch/data
-        ports:
-            - "9200:9200"
-            - "9300:9300"
-        links:
-            - php-fpm
+#    elasticsearch:
+#        build: ./elasticsearch
+#        volumes:
+#            - elasticsearch-data:/usr/share/elasticsearch/data
+#            - elasticsearch-plugins:/usr/share/elasticsearch/data
+#        ports:
+#            - "9200:9200"
+#            - "9300:9300"
+#        links:
+#            - php-fpm
 
 ### Selenium Container #########################################
 
