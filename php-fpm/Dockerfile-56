@@ -168,6 +168,8 @@ RUN rm -r /var/lib/apt/lists/*
 
 RUN usermod -u 1000 www-data
 
+RUN docker-php-ext-install mysql
+
 WORKDIR /var/www
 
 CMD ["php-fpm"]

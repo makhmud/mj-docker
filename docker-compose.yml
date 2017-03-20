@@ -186,20 +186,20 @@ services:
 
 ### phpMyAdmin Container ####################################
 
-    phpmyadmin:
-        build: ./phpmyadmin
-        environment:
-            PMA_ARBITRARY: 1
-            MYSQL_USER: homestead
-            MYSQL_PASSWORD: secret
-            MYSQL_ROOT_PASSWORD: 123123
-        ports:
-            - "8888:80"
-        links:
-            # for mysql container
-            - "mysql:db"
-            # for mariadb container
-            # - "mariadb:db"
+#    phpmyadmin:
+#        build: ./phpmyadmin
+#        environment:
+#            PMA_ARBITRARY: 1
+#            MYSQL_USER: homestead
+#            MYSQL_PASSWORD: secret
+#            MYSQL_ROOT_PASSWORD: 123123
+#        ports:
+#            - "8888:80"
+#        links:
+#            # for mysql container
+#            - "mysql:db"
+#            # for mariadb container
+#            # - "mariadb:db"
 
 ### ElasticSearch Container #################################
 
